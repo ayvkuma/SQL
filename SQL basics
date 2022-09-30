@@ -40,27 +40,35 @@
 	one way:
 	FROM admissions WHERE admission_date = discharge_date;
 
-8. Select where statement.
+8. Find count of entries for perticular value in a clomun.
 	one way:
-	second way:
+	SELECT patient_id, COUNT(*) AS total_admissions FROM admissions
+	WHERE patient_id = 573;
 
-9. Select where statement.
+9. Find unique values in a column with referance to other column.
 	one way:
-	second way:
+	SELECT DISTINCT(city) AS unique_cities FROM patients
+	WHERE province_id = 'NS';
 
-10. Select where statement.
+10. Select where two columns are greater than certain number.
 	one way:
-	second way:
+	SELECT first_name, last_name, birth_date FROM patients
+	WHERE height > 160 AND weight > 70;
 
-11. Select where statement.
+11. Select where values in columns or not NULL.
 	one way:
-	second way:
+	SELECT first_name, last_name, allergies FROM patients
+	WHERE city = 'Hamilton' AND allergies IS NOT null AND allergies <> 'NKA'
 
-3. Select where statement.
+12. get Distinct column data in ascending order.
 	one way:
+	SELECT DISTINCT YEAR(birth_date) AS birth_year FROM patients
+	ORDER BY birth_year;
 	second way:
+	SELECT year(birth_date) FROM patients 
+	GROUP BY year(birth_date)
 
-3. Select where statement.
+13. Select where statement.
 	one way:
 	second way:
 
