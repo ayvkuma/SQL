@@ -76,25 +76,59 @@
 	SELECT first_name FROM (SELECT first_name, count(first_name) AS occurrencies FROM patients GROUP BY first_name)
 	WHERE occurrencies = 1
 
-3. Select where statement.
+3. Find values in a column with specific letters and characters.
 	one way:
+	SELECT patient_id, first_name FROM patients
+	WHERE first_name LIKE 's____%s';
 	second way:
+	SELECT patient_id, first_name FROM patients
+	WHERE first_name LIKE 's%s' AND len(first_name) >= 6;
+	third way:
+	SELECT patient_id, first_name FROM patients
+	where first_name like 's%' and first_name like '%s' and len(first_name) >= 6;
 
-3. Select where statement.
+3. Inner join and filter data with value
 	one way:
+	SELECT patients.patient_id,first_name,last_name FROM patients
+	INNER JOIN admissions ON patients.patient_id = admissions.patient_id
+	WHERE admissions.primary_diagnosis IN ('Dementia')
 	second way:
+	SELECT patients.patient_id, first_name, last_name FROM patients
+  	JOIN admissions ON admissions.patient_id = patients.patient_id
+	WHERE primary_diagnosis = 'Dementia';
+	third way:
+	SELECT patient_id, first_name, last_name FROM patients
+	WHERE patient_id IN (SELECT patient_id FROM admissions
+    	WHERE primary_diagnosis = 'Dementia');
 
-3. Select where statement.
+3. Order by length of char and alphabates
 	one way:
-	second way:
+	SELECT first_name FROM patients
+	order by len(first_name),first_name;
 
-3. Select where statement.
+3. get count of column values in single row.
 	one way:
+	SELECT 
+	(SELECT count(*) FROM patients WHERE gender='M') AS male_count, 
+  	(SELECT count(*) FROM patients WHERE gender='F') AS female_count;
 	second way:
+	SELECT 
+  	SUM(Gender = 'M') as male_count, 
+  	SUM(Gender = 'F') AS female_count
+	FROM patients
+	third way:
+	SELECT 
+  	SUM(CASE WHEN gender = 'M' THEN 1 END) AS male_count,
+  	SUM(CASE WHEN gender = 'F' THEN 1 END) AS female_count 
+	FROM patients;
 
-3. Select where statement.
+3. Find multiple entries for same value.
 	one way:
-	second way:
+	SELECT patient_id, primary_diagnosis FROM admissions
+	GROUP BY
+		patient_id,
+  		primary_diagnosis
+	HAVING COUNT(*) > 1;
 
 3. Select where statement.
 	one way:
